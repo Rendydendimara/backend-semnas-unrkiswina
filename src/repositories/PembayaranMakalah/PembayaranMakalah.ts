@@ -86,18 +86,63 @@ export const findPembayaranMakalahByMakalahUseCase = async (
       path: 'user',
       select: '_id nama_lengkap',
     });
-    if (!pembayaranMakalah) {
-      return res.status(400).send({
-        success: false,
-        data: null,
-        message: 'Pembayaran makalah tidak ditemukan',
-      });
-    }
 
     return res.send({
       success: true,
       data: pembayaranMakalah,
       message: 'Success get pembayaran makalah',
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const getListPembayaranMakalahUseCase = async (
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const pembayaranMakalah = await PembayaranMakalah.find()
+      .populate({
+        path: 'user',
+        select: '_id nama_lengkap',
+      })
+      .populate({
+        path: 'makalah',
+        select: '_id judul_makalah status_makalah bukti_transfer',
+      });
+
+    return res.send({
+      success: true,
+      data: pembayaranMakalah,
+      message: 'Success get pembayaran makalah',
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const findPembayaranMakalahByIdUseCase = async (
+  id: string,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const pembayaranMakalah = await PembayaranMakalah.findOne({
+      _id: id,
+    })
+      .populate({
+        path: 'user',
+        select: '_id nama_lengkap',
+      })
+      .populate({
+        path: 'makalah',
+        select: '_id judul_makalah status_makalah bukti_transfer',
+      });
+    return res.send({
+      success: true,
+      data: pembayaranMakalah,
+      message: 'Success get detail pembayaran makalah',
     });
   } catch (e) {
     next(e);

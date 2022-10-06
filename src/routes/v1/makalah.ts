@@ -6,6 +6,7 @@ import {
   deleteMakalahController,
   findMakalahByUserController,
   findMakalahByIdController,
+  getListMakalahController,
 } from '../../controller/Makalah/Makalah';
 import { updateStatusMakalahController } from '../../controller/Makalah/Admin';
 import { asyncErrorHandler } from '../../middleware';
@@ -67,6 +68,12 @@ makalahRouter.post(
   '/admin/change-status',
   asyncErrorHandler(isAuth('admin')),
   asyncErrorHandler(updateStatusMakalahController)
+);
+
+makalahRouter.get(
+  '/admin/list',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(getListMakalahController)
 );
 
 export default makalahRouter;

@@ -5,8 +5,8 @@ import { hashingPassword } from '../../service/password';
 export const createAdminSeeds = async () => {
   try {
     const adminPayload: IUser | any = {
-      fullname: 'Rendy Dendimara',
-      email: 'r3ndydinar@gmail.com',
+      nama_lengkap: 'Rendy Dendimara',
+      email: 'rendyadmin@gmail.com',
       gender: 'L',
       is_verify: true,
       password: 'R3ndypassword123',

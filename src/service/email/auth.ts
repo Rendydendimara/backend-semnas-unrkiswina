@@ -1,4 +1,4 @@
-import { APP_NAME, BASE_URL } from '../../config';
+import { FRONTEND_URL } from '../../config';
 import emailTransporter from '../../config/email';
 
 const fromAdmin = `info@dbmaid.com`;
@@ -21,7 +21,7 @@ export const serviceSendEmailRegister = (user: {
 Hallo ${user.username},
 
 
-Langkah terakhir, silakan melakukan verifikasi akun melalui link berikut: ${BASE_URL}/v1/user/verify?userId=${user.userId}&tokenVerify=${user.tokenVerify}
+Langkah terakhir, silakan melakukan verifikasi akun melalui link berikut: ${FRONTEND_URL}/verify?userId=${user.userId}&tokenVerify=${user.tokenVerify}
 
 
         `,

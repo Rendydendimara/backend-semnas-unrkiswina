@@ -113,6 +113,14 @@ export const loginUseCase = async (
         message: 'Email atau password salah',
       });
     }
+    if (!user.is_verify) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Akun anda belum terverifikasi',
+      });
+    }
+
     const validate: boolean = await user.isValidPassword(payload.password);
 
     if (!validate) {
@@ -274,7 +282,7 @@ export const sendOTPResetPasswordUserUseCase = async (
 
     user.otp_reset_password = randomString(5);
     user.create_otp_reset_password_at = moment(new Date())
-      .add(10, 'minutes')
+      .add(5, 'minutes')
       .toDate();
     await user.save();
 

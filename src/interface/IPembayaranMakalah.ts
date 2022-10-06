@@ -10,6 +10,7 @@ export interface IPembayaranMakalah {
   keterangan: string;
   harga: string;
   bank_pengirim: string;
+  nama_pengirim: string;
   jumlah_transfer: string;
   bukti_transfer: string; // link file bukti transfer
   tanggal_konfirmasi_pembayaran: Date;

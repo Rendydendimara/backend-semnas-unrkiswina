@@ -3,6 +3,8 @@ import imageBuktiPembayaran from '../../config/multer/imageBuktiPembayaran';
 import {
   uploadBuktiPembayaranMakalahController,
   findPembayaranMakalahByMakalahController,
+  getListPembayaranMakalahController,
+  findPembayaranMakalahByIdController,
 } from '../../controller/PembayaranMakalah/PembayaranMakalah';
 import {
   updateStatusPembayaranMakalahController,
@@ -36,6 +38,18 @@ pembayaranMakalahRouter.post(
   '/admin/change-status',
   asyncErrorHandler(isAuth('admin')),
   asyncErrorHandler(updateStatusPembayaranMakalahController)
+);
+
+pembayaranMakalahRouter.get(
+  '/admin/list',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(getListPembayaranMakalahController)
+);
+
+pembayaranMakalahRouter.get(
+  '/detail/:pembayaranMakalahId',
+  asyncErrorHandler(isAuth()),
+  asyncErrorHandler(findPembayaranMakalahByIdController)
 );
 
 export default pembayaranMakalahRouter;

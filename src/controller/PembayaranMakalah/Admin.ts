@@ -36,6 +36,8 @@ export const updatePembayaranMakalahController = async (
 ) => {
   try {
     const {
+      nama_pengirim,
+      statusPembayaran,
       category_harga_makalah,
       peruntukan,
       keterangan,
@@ -46,6 +48,8 @@ export const updatePembayaranMakalahController = async (
     } = req.body;
     if (
       !(
+        nama_pengirim &&
+        statusPembayaran &&
         category_harga_makalah &&
         peruntukan &&
         bank_pengirim &&
@@ -62,6 +66,8 @@ export const updatePembayaranMakalahController = async (
     }
     await updatePembayaranMakalahUseCase(
       {
+        nama_pengirim,
+        statusPembayaran,
         category_harga_makalah,
         peruntukan,
         keterangan,

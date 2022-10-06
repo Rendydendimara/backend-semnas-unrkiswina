@@ -5,6 +5,7 @@ import {
   deleteMakalahUseCase,
   findMakalahByUserUseCase,
   findMakalahByIdUseCase,
+  getListMakalahUseCase,
 } from '../../repositories/Makalah/Makalah';
 
 export const createMakalahController = async (
@@ -134,6 +135,18 @@ export const findMakalahByIdController = async (
       });
     }
     await findMakalahByIdUseCase(req.params.makalahId, res, next);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getListMakalahController = async (
+  req: Request | any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await getListMakalahUseCase(res, next);
   } catch (err) {
     next(err);
   }

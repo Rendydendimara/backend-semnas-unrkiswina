@@ -3,6 +3,8 @@ import PembayaranMakalah from '../../models/pembayaranMakalah';
 
 export const updatePembayaranMakalahUseCase = async (
   payload: {
+    nama_pengirim: string;
+    statusPembayaran: string;
     category_harga_makalah: string;
     peruntukan: string;
     keterangan: string;
@@ -26,6 +28,10 @@ export const updatePembayaranMakalahUseCase = async (
         message: 'Pembayaran makalah tidak ditemukan',
       });
     }
+    pembayaranMakalah.nama_pengirim =
+      payload.nama_pengirim || pembayaranMakalah.nama_pengirim;
+    pembayaranMakalah.status =
+      payload.statusPembayaran || pembayaranMakalah.status;
     pembayaranMakalah.category_harga_makalah =
       payload.category_harga_makalah ||
       pembayaranMakalah.category_harga_makalah;

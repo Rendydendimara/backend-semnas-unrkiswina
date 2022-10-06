@@ -254,3 +254,31 @@ export const findMakalahByIdUseCase = async (
     next(e);
   }
 };
+
+export const getListMakalahUseCase = async (
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const makalah = await Makalah.find({
+      is_deleted: false,
+      is_suspend: false,
+    })
+      .populate({
+        path: 'category',
+        select: '_id category_name',
+      })
+      .populate({
+        path: 'user',
+        select: '_id nama_lengkap',
+      });
+
+    return res.send({
+      success: true,
+      data: makalah,
+      message: 'Success get list makalah',
+    });
+  } catch (e) {
+    next(e);
+  }
+};

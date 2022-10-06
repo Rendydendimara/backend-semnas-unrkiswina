@@ -10,6 +10,7 @@ import logger from './libraries/Logger';
 import connectDB from './db/mongo';
 import fs from 'fs';
 import { createKategoriMakalahSeeds } from './db/seed/kategori-makalah';
+import { createAdminSeeds } from './db/seed/admin';
 
 const debug = Debug('backend-semnasunkriswinasumba:server');
 require('dotenv').config();
@@ -32,6 +33,7 @@ for (const folder of folders) {
 connectDB(() => {
   console.log('Successfully connected to database');
   // createKategoriMakalahSeeds();
+  // createAdminSeeds();
   // addVariabelSeed();
   // createAdminSeeds();
   // RunSeedsTableTemplateDBMaid();

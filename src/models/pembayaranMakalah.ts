@@ -39,6 +39,10 @@ const PembayaranMakalahSchema: Schema<PembayaranMakalahDocument> = new Schema({
     type: String,
     default: null,
   },
+  nama_pengirim: {
+    type: String,
+    default: null,
+  },
   harga: {
     type: String,
     default: null,

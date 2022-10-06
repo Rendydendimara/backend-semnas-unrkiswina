@@ -1,8 +1,10 @@
 import { connect, ConnectOptions } from 'mongoose';
 
 export const MONGO_URI_LOCALHOST = 'mongodb://127.0.0.1:27017/semnasunkriswina';
-export const MONGO_URI_STAGGING = '';
-export const MONGO_URI_PRODUCTION = '';
+export const MONGO_URI_STAGGING =
+  'mongodb+srv://operatorshoutoutid:zjYSvUmoT8a6AnqL@cluster0.f5wb5.mongodb.net/semnasunkriswina';
+export const MONGO_URI_PRODUCTION =
+  'mongodb+srv://operatorshoutoutid:zjYSvUmoT8a6AnqL@cluster0.f5wb5.mongodb.net/semnasunkriswina';
 export const MONGO_URI =
   process.env.NODE_ENV === 'development'
     ? MONGO_URI_LOCALHOST

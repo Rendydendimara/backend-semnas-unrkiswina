@@ -104,7 +104,6 @@ export const loginUseCase = async (
   try {
     const user = await User.findOne({
       email: payload.email,
-      is_suspend: false,
     });
     if (!user) {
       return res.status(400).send({
@@ -118,6 +117,15 @@ export const loginUseCase = async (
         success: false,
         data: null,
         message: 'Akun anda belum terverifikasi',
+      });
+    }
+
+    if (user.is_suspend) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message:
+          'Akun anda telah di non-aktifkan, silakan hubungi admin. 082 217 971 133',
       });
     }
 

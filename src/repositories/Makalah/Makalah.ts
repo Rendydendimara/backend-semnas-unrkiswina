@@ -131,6 +131,7 @@ export const updateMakalahUseCase = async (
     makalah.judul_makalah = payload.judul_makalah || makalah.judul_makalah;
     makalah.keterangan = payload.keterangan || makalah.keterangan;
     makalah.category = new Types.ObjectId(payload.category) || makalah.category;
+    makalah.updated_at = new Date();
 
     const port = process.env.PORT || '8080';
     if (req.files.makalah_pdf && req.files.makalah_pdf[0].path) {

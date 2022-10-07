@@ -1,5 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
-import { Types } from 'mongoose';
+import { NextFunction, Response } from 'express';
 import Makalah from '../../models/makalah';
 
 export const updateStatusMakalahUseCase = async (
@@ -18,6 +17,7 @@ export const updateStatusMakalahUseCase = async (
       });
     }
     makalah.status_makalah = statusMakalah;
+    makalah.updated_at = new Date();
     await makalah.save();
 
     return res.send({

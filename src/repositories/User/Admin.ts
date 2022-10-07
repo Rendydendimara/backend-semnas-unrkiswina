@@ -79,3 +79,57 @@ export const createAdminUserUseCase = async (
     next(e);
   }
 };
+
+export const getListUserUseCase = async (res: Response, next: NextFunction) => {
+  try {
+    const user = await User.find({
+      type_user: {
+        $ne: 'admin',
+      },
+    }).select(
+      '_id nama_lengkap email gender pekerjaan no_telfon profile_image type_user created_at is_suspend deleted_at updated_at is_verify'
+    );
+
+    return res.send({
+      success: true,
+      data: user,
+      message: 'Success get list user',
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const changeStatusSuspendUserUseCase = async (
+  payload: {
+    userId: string;
+    isSuspend: boolean;
+  },
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findOne({
+      _id: payload.userId,
+    });
+
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'User tidak ditemukan',
+      });
+    }
+
+    user.is_suspend = payload.isSuspend;
+    await user.save();
+
+    return res.send({
+      success: true,
+      data: user,
+      message: 'Success change status suspend user',
+    });
+  } catch (e) {
+    next(e);
+  }
+};

@@ -47,6 +47,7 @@ export const updatePembayaranMakalahUseCase = async (
     pembayaranMakalah.tanggal_konfirmasi_pembayaran =
       payload.tanggal_konfirmasi_pembayaran ||
       pembayaranMakalah.tanggal_konfirmasi_pembayaran;
+    pembayaranMakalah.updated_at = new Date();
 
     await pembayaranMakalah.save();
     return res.send({

@@ -10,7 +10,11 @@ import {
   verifyResetPasswordUserController,
   updateProfileUserController,
 } from '../../controller/User/User';
-import { createAdminUserController } from '../../controller/User/Admin';
+import {
+  createAdminUserController,
+  getListUserController,
+  changeStatusSuspendUserController,
+} from '../../controller/User/Admin';
 import { asyncErrorHandler } from '../../middleware';
 import imageProfile from '../../config/multer/imageProfile';
 
@@ -45,4 +49,14 @@ userRouter.get(
   asyncErrorHandler(logoutUserController)
 );
 
+userRouter.get(
+  '/admin/list-user',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(getListUserController)
+);
+userRouter.post(
+  '/admin/user-change-suspend',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(changeStatusSuspendUserController)
+);
 export default userRouter;

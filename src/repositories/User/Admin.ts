@@ -1,9 +1,12 @@
 import { NextFunction, Response } from 'express';
+import VideoPresentasi from '../../models/videoPresentasi';
+import Makalah from '../../models/makalah';
 import User from '../../models/user';
 import { hashingPassword } from '../../service/password';
 import { createJWTToken } from '../../utils/jwt';
 import { emailPattern } from '../../utils/reqex';
 import { randomString } from '../../utils/string';
+import PembayaranMakalah from '../../models/pembayaranMakalah';
 
 export const createAdminUserUseCase = async (
   payload: {
@@ -128,6 +131,70 @@ export const changeStatusSuspendUserUseCase = async (
       success: true,
       data: user,
       message: 'Success change status suspend user',
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const getDashboardInfoUseCase = async (
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // user
+    const countUserActive = await User.countDocuments({ is_suspend: false });
+    const countUserSuspend = await User.countDocuments({ is_suspend: true });
+    // makalah
+    const countMakalahConfirmation = await Makalah.countDocuments({
+      status_makalah: 'Menunggu konfirmasi',
+    });
+    const countMakalahDone = await Makalah.countDocuments({
+      status_makalah: 'Makalah diterima',
+    });
+    const countMakalahReject = await Makalah.countDocuments({
+      status_makalah: 'Makalah ditolak',
+    });
+    // pembayaran makalah
+    const countPembayaranMakalahConfirmation =
+      await PembayaranMakalah.countDocuments({ status: 'Menunggu konfirmasi' });
+    const countPembayaranMakalahPaid = await PembayaranMakalah.countDocuments({
+      status: 'Telah dibayar',
+    });
+    const countPembayaranMakalahUnpaid = await PembayaranMakalah.countDocuments(
+      { status: 'Belum dibayar' }
+    );
+    const countPembayaranMakalahFailed = await PembayaranMakalah.countDocuments(
+      { status: 'Gagal' }
+    );
+    // video presentasi
+    const countVideoPresentasi = await VideoPresentasi.countDocuments();
+
+    const data = {
+      totalUser: countUserActive + countUserSuspend,
+      userAktif: countUserActive,
+      userNonaktif: countUserSuspend,
+      totalMakalah:
+        countMakalahConfirmation + countMakalahReject + countMakalahDone,
+      makalahConfirmation: countMakalahConfirmation,
+      makalahReject: countMakalahReject,
+      makalahDone: countMakalahDone,
+      totalPembayaranMakalah:
+        countPembayaranMakalahConfirmation +
+        countPembayaranMakalahPaid +
+        countPembayaranMakalahUnpaid +
+        countPembayaranMakalahFailed,
+      pembayaranMakalahConfirmation: countPembayaranMakalahConfirmation,
+      pembayaranMakalahUnpaid: countPembayaranMakalahUnpaid,
+      pembayaranMakalahPaid: countPembayaranMakalahPaid,
+      pembayaranMakalahFailed: countPembayaranMakalahFailed,
+      totalVideoPresentasi: countVideoPresentasi,
+    };
+
+    return res.send({
+      success: true,
+      data: data,
+      message: 'Success get info dashboard',
     });
   } catch (e) {
     next(e);

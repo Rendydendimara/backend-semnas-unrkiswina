@@ -3,7 +3,7 @@ import KategoriMakalah from '../../models/kategoriMakalah';
 import { Types } from 'mongoose';
 import Makalah from '../../models/makalah';
 import { STATUS_MAKALAH } from '../../utils/makalah';
-
+import config from '../../config';
 export const createMakalahUseCase = async (
   payload: {
     category: string;
@@ -59,17 +59,17 @@ export const createMakalahUseCase = async (
       user: payload.userId,
       created_at: new Date(),
     });
-    const port = process.env.PORT || '8080';
+    const port = config.PORT || '8080';
     if (req.files.makalah_pdf[0].path) {
       const imagePath =
-        process.env.NODE_ENV === 'development'
+        config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_pdf[0].path}`
           : `${req.protocol}://${req.hostname}/${req.files.makalah_pdf[0].path}`;
       newMakalah.file_pdf_makalah = imagePath;
     }
     if (req.files.makalah_word[0].path) {
       const imagePath =
-        process.env.NODE_ENV === 'development'
+        config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_word[0].path}`
           : `${req.protocol}://${req.hostname}/${req.files.makalah_word[0].path}`;
       newMakalah.file_word_makalah = imagePath;
@@ -133,17 +133,17 @@ export const updateMakalahUseCase = async (
     makalah.category = new Types.ObjectId(payload.category) || makalah.category;
     makalah.updated_at = new Date();
 
-    const port = process.env.PORT || '8080';
+    const port = config.PORT || '8080';
     if (req.files.makalah_pdf && req.files.makalah_pdf[0].path) {
       const imagePath =
-        process.env.NODE_ENV === 'development'
+        config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_pdf[0].path}`
           : `${req.protocol}://${req.hostname}/${req.files.makalah_pdf[0].path}`;
       makalah.file_pdf_makalah = imagePath || makalah.file_pdf_makalah;
     }
     if (req.files.makalah_word && req.files.makalah_word[0].path) {
       const imagePath =
-        process.env.NODE_ENV === 'development'
+        config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_word[0].path}`
           : `${req.protocol}://${req.hostname}/${req.files.makalah_word[0].path}`;
       makalah.file_word_makalah = imagePath || makalah.file_word_makalah;

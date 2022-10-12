@@ -11,10 +11,12 @@ import connectDB from './db/mongo';
 import fs from 'fs';
 import { createKategoriMakalahSeeds } from './db/seed/kategori-makalah';
 import { createAdminSeeds } from './db/seed/admin';
+import dotenv from 'dotenv';
+import path from 'path';
+import config from './config';
 
-const debug = Debug('backend-semnasunkriswinasumba:server');
 require('dotenv').config();
-
+const debug = Debug('backend-semnasunkriswinasumba:server');
 // init express app
 const app = express();
 
@@ -98,8 +100,7 @@ app.get('*', (req: Request, res: Response) => {
 app.use(
   async (err: Error | any, req: Request, res: Response, next: NextFunction) => {
     const isDev =
-      process.env.NODE_ENV === 'development' ||
-      process.env.NODE_ENV === 'staging';
+      config.NODE_ENV === 'development' || config.NODE_ENV === 'staging';
     // set locals, only providing error in development
     // res.locals.message = err.message;
     // res.locals.error = isDev ? err : {};
@@ -117,10 +118,10 @@ app.use(
 );
 
 // Listen
-const port = normalizePort(process.env.PORT || '8080');
+const port = normalizePort(config.PORT || '8080');
 app.set('port', port);
 
-if (process.env.NODE_ENV === 'development') {
+if (config.NODE_ENV === 'development') {
   // dummy server options (only for development)
   // const credentials = {
   //   key: fs.readFileSync('key.pem'),
@@ -135,7 +136,7 @@ if (process.env.NODE_ENV === 'development') {
     debug(`Listening on ${bind}`);
     console.log(
       `🚀 Server start on port ${port}`,
-      `Running with ${process.env.NODE_ENV} environment...`
+      `Running with ${config.NODE_ENV} environment...`
     );
   });
   httpsServer.on('error', onError);

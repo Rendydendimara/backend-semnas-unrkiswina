@@ -4,8 +4,8 @@
   "description": "Backend application for SEMNAS UNKRISWINA",
   "main": "server.ts",
   "scripts": {
-    "start": "NODE_ENV=production npm run serve",
-    "dev": "NODE_ENV=development nodemon src/server.ts",
+    "start": "npm run serve",
+    "dev": "nodemon src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "node dist/server.js",
     "build-ts": "tsc",

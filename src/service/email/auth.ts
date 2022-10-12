@@ -1,4 +1,4 @@
-import { FRONTEND_URL } from '../../config';
+import { FRONTEND_URL } from '../../config/index';
 import emailTransporter from '../../config/email';
 
 const fromAdmin = `info@dbmaid.com`;

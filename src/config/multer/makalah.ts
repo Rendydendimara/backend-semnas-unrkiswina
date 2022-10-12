@@ -41,7 +41,7 @@ const storage = multer.diskStorage({
 const uploadPdf = multer({
   storage: storage,
   limits: {
-    fileSize: 502099999, //  50.099999 MB
+    fileSize: 202099999, //  20.099999 MB
   },
   fileFilter: pdfFilter,
 });

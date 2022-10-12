@@ -13,7 +13,8 @@
     "baseUrl": "src",
     "paths": {
       "*": ["node_modules/*"]
-    }
+    },
+    "typeRoots": ["./global.d.ts", "./node_modules/@types"]
   },
   "include": ["src"]
 }

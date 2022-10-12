@@ -16,14 +16,14 @@ const storage = multer.diskStorage({
 const uploadImage = multer({
   storage: storage,
   limits: {
-    fileSize: 222099999, //  22.099999 MB
+    fileSize: 10000000, //  10.000 MB
   },
   fileFilter: (req, file, cb) => {
     const fileSize = parseInt(req.headers['content-length']);
     if (
       file.mimetype === 'image/png' ||
       file.mimetype === 'image/jpg' ||
-      (file.mimetype === 'image/jpeg' && fileSize < 22099999)
+      (file.mimetype === 'image/jpeg' && fileSize < 10000000)
     ) {
       // file berupa gambar
       cb(null, true);
@@ -37,9 +37,9 @@ const uploadImage = multer({
       ) {
         cb(null, false);
         return cb(new Error('File Harus Berformat .jpg, .png, .jpeg'));
-      } else if (fileSize > 22099999) {
+      } else if (fileSize > 10000000) {
         cb(null, false);
-        return cb(new Error('Ukuran file tidak boleh lebih dari 22mb'));
+        return cb(new Error('Ukuran file tidak boleh lebih dari 10mb'));
       } else {
         cb(null, false);
         return cb(new Error('File error'));

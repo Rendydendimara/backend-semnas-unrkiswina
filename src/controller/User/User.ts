@@ -9,7 +9,7 @@ import {
   verifyResetPasswordUserUseCase,
   updateProfileUserUseCase,
 } from '../../repositories/User/Auth';
-
+import { getDashboardInfoUseCase } from '../../repositories/User/User';
 export const registerUserController = async (
   req: Request,
   res: Response,
@@ -193,6 +193,18 @@ export const updateProfileUserController = async (
       res,
       next
     );
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getDashboardInfoUserController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await getDashboardInfoUseCase(req, res, next);
   } catch (err) {
     next(err);
   }

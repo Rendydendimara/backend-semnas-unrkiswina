@@ -2,7 +2,7 @@ import { NextFunction, Response, Request } from 'express';
 import Makalah from '../../models/makalah';
 import PembayaranMakalah from '../../models/pembayaranMakalah';
 import { STATUS_PEMBAYARAN_MAKALAH } from '../../utils/pembayaranMakalah';
-
+import config from '../../config';
 export const uploadBuktiPembayaranMakalahUseCase = async (
   payload: { makalah: string },
   req: Request | any,
@@ -51,9 +51,9 @@ export const uploadBuktiPembayaranMakalahUseCase = async (
       });
     }
 
-    const port = process.env.PORT || '8080';
+    const port = config.PORT || '8080';
     const imagePath =
-      process.env.NODE_ENV === 'development'
+      config.NODE_ENV === 'development'
         ? `${req.protocol}://${req.hostname}:${port}/${req.file.path}`
         : `${req.protocol}://${req.hostname}/${req.file.path}`;
 

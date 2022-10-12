@@ -11,6 +11,7 @@ import { JWT_SECRET } from '../../config/jwt';
 import { hashingPassword } from '../../service/password';
 import { randomString } from '../../utils/string';
 import moment from 'moment';
+import config from '../../config';
 
 export const resigterUserUseCase = async (
   payload: {
@@ -399,9 +400,9 @@ export const updateProfileUserUseCase = async (
     user.no_telfon = payload.no_telfon || user.no_telfon;
 
     if (req.file) {
-      const port = process.env.PORT || '8080';
+      const port = config.PORT || '8080';
       const imagePath =
-        process.env.NODE_ENV === 'development'
+        config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.file.path}`
           : `${req.protocol}://${req.hostname}/${req.file.path}`;
 

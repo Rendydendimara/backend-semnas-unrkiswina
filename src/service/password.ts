@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { ROUNDED_SALT_BCRYPT } from '../config';
+import { ROUNDED_SALT_BCRYPT } from '../config/index';
 
 export const hashingPassword = async (password: string) =>
   new Promise(async (resolve, reject) => {

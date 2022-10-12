@@ -3,6 +3,7 @@ import {
   createAdminUserUseCase,
   getListUserUseCase,
   changeStatusSuspendUserUseCase,
+  getDashboardInfoUseCase,
 } from '../../repositories/User/Admin';
 
 export const createAdminUserController = async (
@@ -71,6 +72,18 @@ export const changeStatusSuspendUserController = async (
       res,
       next
     );
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getDashboardInfoController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await getDashboardInfoUseCase(res, next);
   } catch (err) {
     next(err);
   }

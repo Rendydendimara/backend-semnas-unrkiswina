@@ -9,11 +9,13 @@ import {
   sendOTPResetPasswordUserController,
   verifyResetPasswordUserController,
   updateProfileUserController,
+  getDashboardInfoUserController,
 } from '../../controller/User/User';
 import {
   createAdminUserController,
   getListUserController,
   changeStatusSuspendUserController,
+  getDashboardInfoController,
 } from '../../controller/User/Admin';
 import { asyncErrorHandler } from '../../middleware';
 import imageProfile from '../../config/multer/imageProfile';
@@ -58,5 +60,17 @@ userRouter.post(
   '/admin/user-change-suspend',
   asyncErrorHandler(isAuth('admin')),
   asyncErrorHandler(changeStatusSuspendUserController)
+);
+
+userRouter.get(
+  '/admin/dashboard',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(getDashboardInfoController)
+);
+
+userRouter.get(
+  '/dashboard',
+  asyncErrorHandler(isAuth()),
+  asyncErrorHandler(getDashboardInfoUserController)
 );
 export default userRouter;

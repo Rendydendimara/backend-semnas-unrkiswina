@@ -18,6 +18,7 @@ interface ENV {
   JWT_SECRET: string | undefined;
   JWT_EXPIRES_IN: string | undefined;
   FRONTEND_URL: string | undefined;
+  BACKEND_URL: string | undefined;
 }
 
 interface Config {
@@ -30,6 +31,7 @@ interface Config {
   JWT_SECRET: string;
   JWT_EXPIRES_IN: string;
   FRONTEND_URL: string;
+  BACKEND_URL: string;
 }
 
 // Loading process.env as ENV interface
@@ -47,6 +49,7 @@ const getConfig = (): ENV => {
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
     FRONTEND_URL: process.env.FRONTEND_URL,
+    BACKEND_URL: process.env.BACKEND_URL,
   };
 };
 

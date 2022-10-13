@@ -64,14 +64,14 @@ export const createMakalahUseCase = async (
       const imagePath =
         config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_pdf[0].path}`
-          : `${req.protocol}://${req.hostname}/${req.files.makalah_pdf[0].path}`;
+          : `${config.BACKEND_URL}/${req.files.makalah_pdf[0].path}`;
       newMakalah.file_pdf_makalah = imagePath;
     }
     if (req.files.makalah_word[0].path) {
       const imagePath =
         config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_word[0].path}`
-          : `${req.protocol}://${req.hostname}/${req.files.makalah_word[0].path}`;
+          : `${config.BACKEND_URL}/${req.files.makalah_word[0].path}`;
       newMakalah.file_word_makalah = imagePath;
     }
     await newMakalah.save();
@@ -138,14 +138,14 @@ export const updateMakalahUseCase = async (
       const imagePath =
         config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_pdf[0].path}`
-          : `${req.protocol}://${req.hostname}/${req.files.makalah_pdf[0].path}`;
+          : `${config.BACKEND_URL}/${req.files.makalah_pdf[0].path}`;
       makalah.file_pdf_makalah = imagePath || makalah.file_pdf_makalah;
     }
     if (req.files.makalah_word && req.files.makalah_word[0].path) {
       const imagePath =
         config.NODE_ENV === 'development'
           ? `${req.protocol}://${req.hostname}:${port}/${req.files.makalah_word[0].path}`
-          : `${req.protocol}://${req.hostname}/${req.files.makalah_word[0].path}`;
+          : `${config.BACKEND_URL}/${req.files.makalah_word[0].path}`;
       makalah.file_word_makalah = imagePath || makalah.file_word_makalah;
     }
     await makalah.save();

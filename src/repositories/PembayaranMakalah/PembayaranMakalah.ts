@@ -55,7 +55,7 @@ export const uploadBuktiPembayaranMakalahUseCase = async (
     const imagePath =
       config.NODE_ENV === 'development'
         ? `${req.protocol}://${req.hostname}:${port}/${req.file.path}`
-        : `${req.protocol}://${req.hostname}/${req.file.path}`;
+        : `${config.BACKEND_URL}/${req.file.path}`;
 
     const pembayaranMakalah = await PembayaranMakalah.create({
       bukti_transfer: imagePath,

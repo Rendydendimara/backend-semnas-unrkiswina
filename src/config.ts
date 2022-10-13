@@ -17,6 +17,7 @@ interface ENV {
   ROUNDED_SALT_BCRYPT: number | undefined;
   JWT_SECRET: string | undefined;
   JWT_EXPIRES_IN: string | undefined;
+  FRONTEND_URL: string | undefined;
 }
 
 interface Config {
@@ -28,6 +29,7 @@ interface Config {
   ROUNDED_SALT_BCRYPT: number;
   JWT_SECRET: string;
   JWT_EXPIRES_IN: string;
+  FRONTEND_URL: string;
 }
 
 // Loading process.env as ENV interface
@@ -44,6 +46,7 @@ const getConfig = (): ENV => {
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+    FRONTEND_URL: process.env.FRONTEND_URL,
   };
 };
 

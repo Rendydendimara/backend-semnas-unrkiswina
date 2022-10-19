@@ -292,7 +292,7 @@ export const sendOTPResetPasswordUserUseCase = async (
         return res.status(400).send({
           success: false,
           data: null,
-          message: `Tunggu ${duration} untuk melakukan request reset password`,
+          message: `Tunggu ${duration} menit untuk melakukan request reset password`,
         });
       }
     }

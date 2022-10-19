@@ -86,8 +86,9 @@ export const resigterUserUseCase = async (
     });
     return res.send({
       success: true,
-      data: newUser,
-      message: 'Success register',
+      data: null,
+      message:
+        'Success register. Silakan lakukan verifikasi akun pada link diemail',
     });
   } catch (e) {
     next(e);
@@ -117,7 +118,8 @@ export const loginUseCase = async (
       return res.status(400).send({
         success: false,
         data: null,
-        message: 'Akun anda belum terverifikasi',
+        message:
+          'Akun anda belum terverifikasi, silakan cek link verifikasi pada email anda atau hubungi admin. 082 217 971 133',
       });
     }
 
@@ -235,7 +237,7 @@ export const verifyUserUseCase = async (
       return res.status(400).send({
         success: false,
         data: null,
-        message: 'Token verify tidak valid',
+        message: 'Token verify tidak valid atau user tidak ditemukan',
       });
     }
     if (user.is_verify) {
@@ -280,11 +282,17 @@ export const sendOTPResetPasswordUserUseCase = async (
 
     if (user.create_otp_reset_password_at) {
       if (!moment(new Date()).isAfter(user.create_otp_reset_password_at)) {
+        let duration = moment(user.create_otp_reset_password_at).diff(
+          moment(),
+          'minutes'
+        );
+        if (duration < 1) {
+          duration = 1;
+        }
         return res.status(400).send({
           success: false,
           data: null,
-          message:
-            'Tunggu beberapa saat untuk melakukan request reset password',
+          message: `Tunggu ${duration} untuk melakukan request reset password`,
         });
       }
     }
@@ -415,6 +423,78 @@ export const updateProfileUserUseCase = async (
       success: true,
       data: user,
       message: 'Success update profile user',
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export const reSendLinkVerifikasiUseCase = async (
+  email: string,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findOne({
+      email: email,
+    });
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Email tidak terdaftar',
+      });
+    }
+    if (user.is_verify) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Akun anda telah terverifikasi.',
+      });
+    }
+
+    if (user.is_suspend) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message:
+          'Akun anda telah di non-aktifkan, silakan hubungi admin. 082 217 971 133',
+      });
+    }
+
+    if (user.create_token_verify_at) {
+      if (!moment(new Date()).isAfter(user.create_token_verify_at)) {
+        let duration = moment(user.create_token_verify_at).diff(
+          moment(),
+          'minutes'
+        );
+        if (duration < 1) {
+          duration = 1;
+        }
+
+        return res.status(400).send({
+          success: false,
+          data: null,
+          message: `Tunggu ${duration} menit untuk melakukan request link verifykasi`,
+        });
+      }
+    }
+
+    const tokenVerify = randomString(5);
+    user.token_verify = tokenVerify;
+    await serviceSendEmailRegister({
+      username: user.nama_lengkap,
+      email: email,
+      userId: user._id,
+      tokenVerify: tokenVerify,
+    });
+    user.create_token_verify_at = moment(new Date()).add(5, 'minutes').toDate();
+    await user.save();
+
+    return res.send({
+      success: true,
+      data: null,
+      message: 'Success re-send link verifikasi',
     });
   } catch (e) {
     next(e);

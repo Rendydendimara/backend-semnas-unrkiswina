@@ -52,6 +52,10 @@ const UserSchema: Schema<UserDocument> = new Schema({
     type: String,
     default: null,
   },
+  create_token_verify_at: {
+    type: Date,
+    default: null,
+  },
   create_otp_reset_password_at: {
     type: Date,
     default: null,

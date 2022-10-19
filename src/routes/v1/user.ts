@@ -10,6 +10,7 @@ import {
   verifyResetPasswordUserController,
   updateProfileUserController,
   getDashboardInfoUserController,
+  reSendLinkVerifikasiController,
 } from '../../controller/User/User';
 import {
   createAdminUserController,
@@ -50,7 +51,6 @@ userRouter.get(
   asyncErrorHandler(isAuth()),
   asyncErrorHandler(logoutUserController)
 );
-
 userRouter.get(
   '/admin/list-user',
   asyncErrorHandler(isAuth('admin')),
@@ -61,16 +61,19 @@ userRouter.post(
   asyncErrorHandler(isAuth('admin')),
   asyncErrorHandler(changeStatusSuspendUserController)
 );
-
 userRouter.get(
   '/admin/dashboard',
   asyncErrorHandler(isAuth('admin')),
   asyncErrorHandler(getDashboardInfoController)
 );
-
 userRouter.get(
   '/dashboard',
   asyncErrorHandler(isAuth()),
   asyncErrorHandler(getDashboardInfoUserController)
 );
+userRouter.post(
+  '/resend-link-verifikasi',
+  asyncErrorHandler(reSendLinkVerifikasiController)
+);
+
 export default userRouter;

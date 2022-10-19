@@ -8,6 +8,7 @@ import {
   sendOTPResetPasswordUserUseCase,
   verifyResetPasswordUserUseCase,
   updateProfileUserUseCase,
+  reSendLinkVerifikasiUseCase,
 } from '../../repositories/User/Auth';
 import { getDashboardInfoUseCase } from '../../repositories/User/User';
 export const registerUserController = async (
@@ -205,6 +206,26 @@ export const getDashboardInfoUserController = async (
 ) => {
   try {
     await getDashboardInfoUseCase(req, res, next);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const reSendLinkVerifikasiController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Semua data diperlukan',
+      });
+    }
+    await reSendLinkVerifikasiUseCase(email, res, next);
   } catch (err) {
     next(err);
   }

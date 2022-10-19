@@ -17,6 +17,7 @@ export interface IUser {
   updated_at: Date | null;
   is_verify: boolean;
   token_verify: string | null;
+  create_token_verify_at: Date | null;
   verify_at: Date | null;
   otp_reset_password: string | null;
   create_otp_reset_password_at: Date | null;

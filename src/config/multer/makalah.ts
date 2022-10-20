@@ -8,12 +8,7 @@ const pdfFilter = (req: any, file: any, cb: any) => {
     ) |
     file.mimetype.includes('msword')
   ) {
-    // if (fileSize > 22099999) {
-    //   cb(null, false);
-    //   return cb(new Error('Ukuran file tidak boleh lebih dari 22mb'));
-    // } else {
     cb(null, true);
-    // }
   } else {
     if (file.fieldname === 'makalah_word') {
       cb('Harap unggah file type docs/docsx.', false);
@@ -41,7 +36,7 @@ const storage = multer.diskStorage({
 const uploadPdf = multer({
   storage: storage,
   limits: {
-    fileSize: 202099999, //  20.099999 MB
+    fileSize: 22099999, //  20.099999 MB
   },
   fileFilter: pdfFilter,
 });

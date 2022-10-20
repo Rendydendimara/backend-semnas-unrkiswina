@@ -99,7 +99,7 @@ app.get('*', (req: Request, res: Response) => {
 // error handler
 app.use(
   async (err: Error | any, req: Request, res: Response, next: NextFunction) => {
-    const isDev =
+    let isDev =
       config.NODE_ENV === 'development' || config.NODE_ENV === 'staging';
     // set locals, only providing error in development
     // res.locals.message = err.message;
@@ -107,7 +107,14 @@ app.use(
 
     logger.error(err, 'general-error');
     // render the error page
-    const errorMessage = err.message || err;
+    let errorMessage = err.message || err;
+    if (errorMessage?.includes('Ukuran')) {
+      isDev = true;
+    }
+    if (errorMessage?.includes('too large')) {
+      isDev = true;
+      errorMessage = 'Ukuran file terlalu besar';
+    }
     res.status(err.status || 500);
     res.send({
       success: false,

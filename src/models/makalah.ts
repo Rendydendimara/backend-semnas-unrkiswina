@@ -68,6 +68,42 @@ const MakalahSchema: Schema<MakalahDocument> = new Schema({
     type: Date,
     default: null,
   },
+  reviewer: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: false,
+    default: null,
+  },
+  feedback: {
+    type: String,
+    default: null,
+  },
+  score: {
+    type: Number,
+    default: null,
+  },
+  file_reviwer_makalah: {
+    type: String,
+    default: null,
+  },
+  kode_makalah: {
+    type: String,
+    default: null,
+  },
+  metadata: [
+    {
+      type: String,
+      default: null,
+    },
+  ],
+  is_reviewed: {
+    type: Boolean,
+    default: false,
+  },
+  reviewed_at: {
+    type: Date,
+    default: null,
+  },
 });
 
 const Makalah = model<MakalahDocument, IMakalahModel>('Makalah', MakalahSchema);

@@ -1,6 +1,9 @@
 import { NextFunction, Response } from 'express';
 import Makalah from '../../models/makalah';
 
+/**
+ * This use case using by admin and publikasi
+ */
 export const updateStatusMakalahUseCase = async (
   makalahId: string,
   statusMakalah: string,

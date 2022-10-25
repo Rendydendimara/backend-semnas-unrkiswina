@@ -14,7 +14,7 @@ export const createMakalahController = async (
   next: NextFunction
 ) => {
   try {
-    const { category, judul_makalah, keterangan, userId } = req.body;
+    const { category, judul_makalah, keterangan, userId, metadata } = req.body;
     if (!(category && judul_makalah && keterangan && userId)) {
       return res.status(400).send({
         success: false,
@@ -28,6 +28,7 @@ export const createMakalahController = async (
         judul_makalah,
         keterangan,
         userId,
+        metadata,
       },
       req,
       res,
@@ -44,7 +45,7 @@ export const updateMakalahController = async (
   next: NextFunction
 ) => {
   try {
-    const { category, judul_makalah, keterangan, userId } = req.body;
+    const { category, judul_makalah, keterangan, userId, metadata } = req.body;
     if (
       !(
         category &&
@@ -66,6 +67,7 @@ export const updateMakalahController = async (
         judul_makalah,
         keterangan,
         userId,
+        metadata,
       },
       req.params.makalahId,
       req,

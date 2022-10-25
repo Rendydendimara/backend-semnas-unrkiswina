@@ -17,6 +17,7 @@ import {
   getListUserController,
   changeStatusSuspendUserController,
   getDashboardInfoController,
+  createUserPublikasiOrReviewerController,
 } from '../../controller/User/Admin';
 import { asyncErrorHandler } from '../../middleware';
 import imageProfile from '../../config/multer/imageProfile';
@@ -74,6 +75,12 @@ userRouter.get(
 userRouter.post(
   '/resend-link-verifikasi',
   asyncErrorHandler(reSendLinkVerifikasiController)
+);
+
+userRouter.post(
+  '/admin/create-publikasi-reviewer',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(createUserPublikasiOrReviewerController)
 );
 
 export default userRouter;

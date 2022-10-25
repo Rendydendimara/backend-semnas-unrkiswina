@@ -24,7 +24,7 @@ pembayaranMakalahRouter.post(
 
 pembayaranMakalahRouter.post(
   '/find-by-makalah',
-  asyncErrorHandler(isAuth('pemakalah')),
+  asyncErrorHandler(isAuth()),
   asyncErrorHandler(findPembayaranMakalahByMakalahController)
 );
 

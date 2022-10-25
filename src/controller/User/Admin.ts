@@ -4,6 +4,7 @@ import {
   getListUserUseCase,
   changeStatusSuspendUserUseCase,
   getDashboardInfoUseCase,
+  createUserPublikasiOrReviewerUseCase,
 } from '../../repositories/User/Admin';
 
 export const createAdminUserController = async (
@@ -84,6 +85,46 @@ export const getDashboardInfoController = async (
 ) => {
   try {
     await getDashboardInfoUseCase(res, next);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const createUserPublikasiOrReviewerController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      nama_lengkap,
+      gender,
+      password,
+      pekerjaan,
+      no_telfon,
+      email,
+      type_user,
+    } = req.body;
+    if (!(nama_lengkap && password && email)) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Semua data diperlukan',
+      });
+    }
+    await createUserPublikasiOrReviewerUseCase(
+      {
+        nama_lengkap,
+        gender,
+        password,
+        pekerjaan,
+        no_telfon,
+        email,
+        type_user,
+      },
+      res,
+      next
+    );
   } catch (err) {
     next(err);
   }

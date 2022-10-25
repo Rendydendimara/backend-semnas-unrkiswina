@@ -9,7 +9,7 @@ export interface IUser {
   pekerjaan: string | null;
   no_telfon: string | null;
   profile_image: string | null;
-  type_user: 'peserta' | 'pemakalah' | 'admin';
+  type_user: 'peserta' | 'pemakalah' | 'admin' | 'publikasi' | 'reviewer';
   token: string | null;
   created_at: Date;
   is_suspend: boolean;

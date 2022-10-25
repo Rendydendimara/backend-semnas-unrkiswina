@@ -10,6 +10,7 @@ export const createMakalahUseCase = async (
     judul_makalah: string;
     keterangan: string;
     userId: string;
+    metadata: string[];
   },
   req: Request | any,
   res: Response,
@@ -49,7 +50,15 @@ export const createMakalahUseCase = async (
         message: 'Dokumen WORD makalah harus diinput',
       });
     }
-
+    const countMakalahCategory = await Makalah.countDocuments({
+      category: payload.category,
+    });
+    let kodeMakalah = '';
+    if (category.category_name === 'Ilmu-ilmu Peternakan') {
+      kodeMakalah = `ptk-${countMakalahCategory + 1}`;
+    } else if (category.category_name === 'Teknik Informatika') {
+      kodeMakalah = `tif-${countMakalahCategory + 1}`;
+    }
     const newMakalah = await Makalah.create({
       judul_makalah: payload.judul_makalah,
       keterangan: payload.keterangan,
@@ -58,6 +67,8 @@ export const createMakalahUseCase = async (
       is_suspend: false,
       user: payload.userId,
       created_at: new Date(),
+      kode_makalah: kodeMakalah,
+      metadata: payload.metadata,
     });
     const port = config.PORT || '8080';
     if (req.files.makalah_pdf[0].path) {
@@ -91,6 +102,7 @@ export const updateMakalahUseCase = async (
     judul_makalah: string;
     keterangan: string;
     userId: string;
+    metadata: string[];
   },
   makalahId: string,
   req: Request | any,
@@ -130,6 +142,7 @@ export const updateMakalahUseCase = async (
 
     makalah.judul_makalah = payload.judul_makalah || makalah.judul_makalah;
     makalah.keterangan = payload.keterangan || makalah.keterangan;
+    makalah.metadata = payload.metadata || makalah.metadata;
     makalah.category = new Types.ObjectId(payload.category) || makalah.category;
     makalah.updated_at = new Date();
 
@@ -271,6 +284,10 @@ export const getListMakalahUseCase = async (
       })
       .populate({
         path: 'user',
+        select: '_id nama_lengkap',
+      })
+      .populate({
+        path: 'reviewer',
         select: '_id nama_lengkap',
       });
 

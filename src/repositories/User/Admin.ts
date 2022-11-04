@@ -275,3 +275,37 @@ export const createUserPublikasiOrReviewerUseCase = async (
     next(e);
   }
 };
+
+export const changeUserTypeUseCase = async (
+  payload: {
+    email: string;
+    userType: 'peserta' | 'pemakalah' | 'admin' | 'publikasi' | 'reviewer';
+  },
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findOne({
+      email: payload.email,
+    });
+
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'User tidak ditemukan',
+      });
+    }
+
+    user.type_user = payload.userType;
+    await user.save();
+
+    return res.send({
+      success: true,
+      data: null,
+      message: 'Success change user type',
+    });
+  } catch (e) {
+    next(e);
+  }
+};

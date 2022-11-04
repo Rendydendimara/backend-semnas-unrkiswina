@@ -10,7 +10,10 @@ import {
   updateProfileUserUseCase,
   reSendLinkVerifikasiUseCase,
 } from '../../repositories/User/Auth';
-import { getDashboardInfoUseCase } from '../../repositories/User/User';
+import {
+  getDashboardInfoUseCase,
+  getUserProfileUseCase,
+} from '../../repositories/User/User';
 export const registerUserController = async (
   req: Request,
   res: Response,
@@ -226,6 +229,26 @@ export const reSendLinkVerifikasiController = async (
       });
     }
     await reSendLinkVerifikasiUseCase(email, res, next);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUserProfileController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.params.userId;
+    if (!userId) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Semua data diperlukan',
+      });
+    }
+    await getUserProfileUseCase(userId, res, next);
   } catch (err) {
     next(err);
   }

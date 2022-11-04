@@ -48,3 +48,31 @@ export const getDashboardInfoUseCase = async (
     next(e);
   }
 };
+
+export const getUserProfileUseCase = async (
+  userId: string,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const user = await User.findById(userId).select(
+      '_id nama_lengkap email gender pekerjaan no_telfon profile_image type_user'
+    );
+
+    if (!user) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Pengguna tidak ditemukan',
+      });
+    }
+
+    return res.send({
+      success: true,
+      data: user,
+      message: 'Success get user profile',
+    });
+  } catch (e) {
+    next(e);
+  }
+};

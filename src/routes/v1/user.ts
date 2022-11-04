@@ -11,6 +11,7 @@ import {
   updateProfileUserController,
   getDashboardInfoUserController,
   reSendLinkVerifikasiController,
+  getUserProfileController,
 } from '../../controller/User/User';
 import {
   createAdminUserController,
@@ -18,6 +19,7 @@ import {
   changeStatusSuspendUserController,
   getDashboardInfoController,
   createUserPublikasiOrReviewerController,
+  changeUserTypeController,
 } from '../../controller/User/Admin';
 import { asyncErrorHandler } from '../../middleware';
 import imageProfile from '../../config/multer/imageProfile';
@@ -82,5 +84,13 @@ userRouter.post(
   asyncErrorHandler(isAuth('admin')),
   asyncErrorHandler(createUserPublikasiOrReviewerController)
 );
+
+userRouter.post(
+  '/admin/change-user-type',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(changeUserTypeController)
+);
+
+userRouter.get('/profile/:userId', asyncErrorHandler(getUserProfileController));
 
 export default userRouter;

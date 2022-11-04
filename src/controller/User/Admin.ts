@@ -5,6 +5,7 @@ import {
   changeStatusSuspendUserUseCase,
   getDashboardInfoUseCase,
   createUserPublikasiOrReviewerUseCase,
+  changeUserTypeUseCase,
 } from '../../repositories/User/Admin';
 
 export const createAdminUserController = async (
@@ -121,6 +122,44 @@ export const createUserPublikasiOrReviewerController = async (
         no_telfon,
         email,
         type_user,
+      },
+      res,
+      next
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const changeUserTypeController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, userType } = req.body;
+    if (!(email && userType)) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'Semua data diperlukan',
+      });
+    }
+    if (
+      !['peserta', 'pemakalah', 'admin', 'publikasi', 'reviewer'].includes(
+        userType
+      )
+    ) {
+      return res.status(400).send({
+        success: false,
+        data: null,
+        message: 'User type salah',
+      });
+    }
+    await changeUserTypeUseCase(
+      {
+        email,
+        userType,
       },
       res,
       next

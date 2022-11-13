@@ -34,6 +34,10 @@ const MakalahSchema: Schema<MakalahDocument> = new Schema({
     type: String,
     default: null,
   },
+  file_loa_makalah: {
+    type: String,
+    default: null,
+  },
   keterangan: {
     type: String,
     default: null,
@@ -65,6 +69,10 @@ const MakalahSchema: Schema<MakalahDocument> = new Schema({
     default: null,
   },
   updated_at: {
+    type: Date,
+    default: null,
+  },
+  last_date_send_loa: {
     type: Date,
     default: null,
   },

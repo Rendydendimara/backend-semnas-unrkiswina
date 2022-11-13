@@ -22,4 +22,6 @@ export interface IMakalah {
   metadata: string[] | null;
   is_reviewed: boolean | null;
   reviewed_at: Date | null;
+  file_loa_makalah: string | null;
+  last_date_send_loa: Date | null;
 }

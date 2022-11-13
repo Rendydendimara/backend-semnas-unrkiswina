@@ -8,7 +8,11 @@ import {
   findMakalahByIdController,
   getListMakalahController,
 } from '../../controller/Makalah/Makalah';
-import { updateStatusMakalahController } from '../../controller/Makalah/Admin';
+import {
+  sendLOAMakalahByEmailPemakalahController,
+  updateStatusMakalahController,
+  uploadLOAMakalahController,
+} from '../../controller/Makalah/Admin';
 import { asyncErrorHandler } from '../../middleware';
 import { isAuth } from '../../middleware/userAuth';
 
@@ -74,6 +78,19 @@ makalahRouter.get(
   '/admin/list',
   asyncErrorHandler(isAuth('admin')),
   asyncErrorHandler(getListMakalahController)
+);
+
+makalahRouter.post(
+  '/admin/upload-loa',
+  asyncErrorHandler(isAuth('admin')),
+  makalah.single('makalah_word'),
+  asyncErrorHandler(uploadLOAMakalahController)
+);
+
+makalahRouter.get(
+  '/admin/send-email-loa/:makalahId',
+  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(sendLOAMakalahByEmailPemakalahController)
 );
 
 export default makalahRouter;

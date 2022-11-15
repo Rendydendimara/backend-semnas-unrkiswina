@@ -6,6 +6,7 @@ import publikasiRouter from './publikasi';
 import userRouter from './user';
 import videoPresentasiRouter from './videoPresentasi';
 import reviewerRouter from './reviewer';
+import utilsRouter from './utils';
 const router = express.Router();
 
 router.use('/user', userRouter);
@@ -15,5 +16,6 @@ router.use('/pembayaran-makalah', pembayaranMakalahRouter);
 router.use('/video-presentasi', videoPresentasiRouter);
 router.use('/publikasi', publikasiRouter);
 router.use('/reviewer', reviewerRouter);
+router.use('/utils', utilsRouter);
 
 export default router;

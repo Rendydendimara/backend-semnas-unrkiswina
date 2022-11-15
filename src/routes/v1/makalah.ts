@@ -18,21 +18,21 @@ import { isAuth } from '../../middleware/userAuth';
 
 const makalahRouter = express.Router();
 
-makalahRouter.post(
-  '/create',
-  asyncErrorHandler(isAuth('pemakalah')),
-  makalah.fields([
-    {
-      name: 'makalah_word',
-      maxCount: 1,
-    },
-    {
-      name: 'makalah_pdf',
-      maxCount: 1,
-    },
-  ]),
-  asyncErrorHandler(createMakalahController)
-);
+// makalahRouter.post(
+//   '/create',
+//   asyncErrorHandler(isAuth('pemakalah')),
+//   makalah.fields([
+//     {
+//       name: 'makalah_word',
+//       maxCount: 1,
+//     },
+//     {
+//       name: 'makalah_pdf',
+//       maxCount: 1,
+//     },
+//   ]),
+//   asyncErrorHandler(createMakalahController)
+// );
 
 makalahRouter.put(
   '/update/:makalahId',

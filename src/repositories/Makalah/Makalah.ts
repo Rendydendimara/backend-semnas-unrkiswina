@@ -52,6 +52,7 @@ export const createMakalahUseCase = async (
     }
     const countMakalahCategory = await Makalah.countDocuments({
       category: payload.category,
+      is_deleted: false,
     });
     let kodeMakalah = '';
     if (category.category_name === 'Ilmu-ilmu Peternakan') {

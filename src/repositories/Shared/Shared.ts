@@ -8,7 +8,17 @@ export const getStatisticsUseCase = async (
 ) => {
   try {
     // user
-    const countUserActive = await User.countDocuments({ is_suspend: false });
+    const countUserActive = await User.countDocuments({
+      is_suspend: false,
+      $or: [
+        {
+          type_user: 'pemakalah',
+        },
+        {
+          type_user: 'peserta',
+        },
+      ],
+    });
     const countUserPemakalah = await User.countDocuments({
       is_suspend: false,
       type_user: 'pemakalah',

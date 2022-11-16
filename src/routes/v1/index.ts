@@ -7,6 +7,7 @@ import userRouter from './user';
 import videoPresentasiRouter from './videoPresentasi';
 import reviewerRouter from './reviewer';
 import utilsRouter from './utils';
+import sharedRouter from './shared';
 const router = express.Router();
 
 router.use('/user', userRouter);
@@ -17,5 +18,6 @@ router.use('/video-presentasi', videoPresentasiRouter);
 router.use('/publikasi', publikasiRouter);
 router.use('/reviewer', reviewerRouter);
 router.use('/utils', utilsRouter);
+router.use('/shared', sharedRouter);
 
 export default router;

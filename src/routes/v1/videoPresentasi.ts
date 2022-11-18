@@ -51,7 +51,7 @@ videoPresentasiRouter.post(
 
 videoPresentasiRouter.get(
   '/admin/list',
-  asyncErrorHandler(isAuth('admin')),
+  asyncErrorHandler(isAuth()),
   asyncErrorHandler(getListVideoPresentasiController)
 );
 
